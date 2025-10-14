@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2 class="lists-header">My Lists</h2>
+        <div class="list-creator">
+            <button class="new-list-btn" aria-label="Create New List">
+                <h2 class="add-list-btn" title="Create New List">+</h2>
+            </button>
+            <h3 class="add-task">New List</h3>
+        </div>
+        <div class="all-lists">
+          <div class="list-item" id="active-list">
+            <li class="list-name">Youtube</li>
+            <p class="active-task-amount">0</p>
+            <button class="delete-list"><img src="./pics/trash.png" class="delete-list-pic" alt=""></button>
+          </div>
+          <div class="list-item">
+            <li class="list-name">Youtube</li>
+            <p class="active-task-amount">0</p>
+            <button class="delete-list"><img src="./pics/trash.png" class="delete-list-pic" alt=""></button>
+          </div>
+          <div class="list-item">
+            <li class="list-name">Youtube</li>
+            <p class="active-task-amount">0</p>
+            <button class="delete-list"><img src="./pics/trash.png" class="delete-list-pic" alt=""></button>
+          </div>
+        </div>
+      </div>
+      <div class="main-content">
+        <h1 class="todo-header">To-Do Tasks</h1>
+        <div class="task-tracker">
+          <div class="total-tasks">
+            <p class="total-header">Total</p>
+            <h3 class="total-task-counter">0</h3>
+          </div>
+          <div class="active-tasks">
+            <p class="active-header">Active</p>
+            <h3 class="active-task-counter">0</h3>
+          </div>
+          <div class="completed-tasks">
+            <p class="completed-header">Completed</p>
+            <h3 class="completed-task-counter">0</h3>
+          </div>
+        </div>
+        <div class="task-list-container">
+          <div class="list-header">
+            <h2 class="list-title">Youtube</h2>
+          </div>
+          <div class="list-body">
+              <div class="task-item completed">
+                  <div class="task-checkbox">
+                    <label for="checkbox"></label>
+                     <input type="checkbox" id="task-checkbox" />
+                  </div>
+                  <div class="task-body">
+                      <label for="task" class="task-title completed">
+                      make to-do list
+                      </label>
+                      <p class="task-description completed">add a few more things</p>
+                      <p class="due-date">10/12/2025</p>
+                  </div>
+                  <div class="priority">
+                    <p class="task-priority">Medium</p>
+                  </div>
+                  <div class="task-action">
+                      <button class="edit-task"><img src="./pics/pencil.png" class="action-pic" alt=""></button>
+                      <button class="delete-task"><img src="./pics/trash.png" class="action-pic" alt=""></button>
+                  </div>
+              </div>
+              <div class="task-item">
+                  <div class="task-checkbox">
+                    <label for="checkbox"></label>
+                     <input type="checkbox" id="task-checkbox" />
+                  </div>
+                  <div class="task-body">
+                      <label for="task" class="task-title">
+                      code more
+                      </label>
+                      <p class="task-description">add extra things</p>
+                      <p class="due-date">10/12/2025</p>
+                  </div>
+                  <div class="priority">
+                    <p class="task-priority medium">Medium</p>
+                  </div>
+                  <div class="task-action">
+                      <button class="edit-task"><img src="./pics/pencil.png" class="action-pic" alt=""></button>
+                      <button class="delete-task"><img src="./pics/trash.png" class="action-pic" alt=""></button>
+                  </div>
+              </div>
+            </div>
+            <div class="task-creator">
+                <button class="new-task-btn" aria-label="Create New Task">
+                    <h2 class="add-task-btn" title="Create New Task">+</h2>
+                </button>
+                <h3 class="add-task">New Task</h3>
+            </div>
+          </div>
+        </div>
+        <div class="popup-container hidden">
+            <div class="popup-content">
+                <div class="popup-new-task hidden">
+                    <div class="popup-inputs">
+                        <input type="text" id="popup-task-input" placeholder="Enter your task here...">
+                        <input type="text" id="popup-task-description" placeholder="Add extra details about your task...">
+                    </div>
+                    <div class="popup-date-prio">
+                        <div class="due-date-container">
+                            <label for="due-date" class="due-date-header">Date Due</label>
+                            <input type="date" id="popup-date-due">
+                        </div>
+                        <div class="popup-priority-container">
+                            <label for="prority-level" class="prio-header">Select Priority</label>
+                            <input list="popup-priority" id="popup-priority-select" name="popup-priority-select" placeholder="Low">
+                            <datalist id="popup-priority">
+                                <option value="Low"></option>
+                                <option value="Medium"></option>
+                                <option value="High"></option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="popup-buttons">
+                        <button class="popup-add-task-btn">Create Task</button>
+                        <button class="popup-cancel-btn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
