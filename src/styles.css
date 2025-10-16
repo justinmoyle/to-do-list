@@ -81,15 +81,16 @@ h3 {
 }
 
 .list-item {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 220px 20px 20px;
+  background-color: #8d99ae12;
   width: 100%;
   padding: 5px;
   border-radius: 10px;
 }
 
 .list-item:hover {
-  background-color: #8d99ae49;
+  background-color: #e94f373a;
   cursor: pointer;
   transition: background-color 250ms ease-in;
 }
@@ -101,7 +102,7 @@ h3 {
 .list-name {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   align-self: center;
   list-style: none;
@@ -128,7 +129,7 @@ h3 {
   cursor: pointer;
 }
 
-#active-list {
+.active-list {
   font-weight: 700;
   background-color: #e94f37;
 }
@@ -136,10 +137,11 @@ h3 {
 .active-task-amount {
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: center;
   align-self: center;
+  justify-self: center;
   margin: 0;
-  margin-left: calc(60%);
+  width: 10px;
   font-size: 15px;
   background-color: #8d99ae;
   padding: 5px;
@@ -230,8 +232,9 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: calc(100% - 10px);
-  overflow-y: scroll;
+  width: 100%;
+  height: 99%;
+  overflow-x: scroll;
 }
 
 .task-count {
@@ -258,17 +261,6 @@ h3 {
   background-color: #8d99ae45;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.task-item.completed {
-  opacity: 0.4;
-  background-color: #8d99ae25;
-  border-radius: 15px;
-}
-
-.task-title.completed,
-.task-description.completed {
-  text-decoration: line-through;
 }
 
 .task-description {
@@ -316,16 +308,19 @@ h3 {
   border: none;
 }
 
-#task-checkbox {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
 .task-checkbox {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+.task-item:has(input[type="checkbox"]:checked) {
+  text-decoration: line-through;
+  opacity: 0.6;
+  background-color: #8d99ae25;
+  transition: text-decoration 0.1s ease;
+  color: #999;
 }
 
 .task-action {
@@ -399,10 +394,9 @@ h3 {
   visibility: hidden;
 }
 
-/* .popup-new-task.hidden {
-  opacity: 0;
-  visibility: hidden;
-} */
+.hidden {
+  display: none !important;
+}
 
 .popup-container {
   position: fixed;
@@ -424,14 +418,15 @@ h3 {
 }
 
 .popup-content {
-  background-color: #8d99ae;
+  position: relative;
+  background-color: #f6f7eb;
   padding: 15px;
   border-radius: 25px;
   width: 450px;
   height: 150px;
   border: 2px solid #2b2d42;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
   gap: 5px;
 }
 
@@ -441,7 +436,8 @@ h3 {
 }
 
 #popup-task-description,
-#popup-task-input {
+#popup-task-input,
+.popup-list-input {
   background: none;
   border: none;
   outline: none;
@@ -449,13 +445,19 @@ h3 {
 }
 
 #popup-task-description:focus,
-#popup-task-input:focus {
+#popup-task-input:focus,
+.popup-list-input:focus {
   opacity: 1;
 }
 
-#popup-task-input {
+#popup-task-input,
+.popup-list-input {
   font-size: 25px;
   font-weight: 500;
+}
+
+.popup-list-input {
+  width: 100%;
 }
 
 #popup-priority-select,
@@ -463,6 +465,7 @@ h3 {
   background-color: #f6f7eb;
   font-size: 15px;
   font-weight: 500;
+  font: inherit;
   border: none;
   height: 100%;
   outline: none;
@@ -472,23 +475,30 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-self: top;
+  border-radius: 15px;
+  margin-bottom: 10px;
 }
 
 #popup-priority-select {
   height: 27px;
-  border-radius: 5px;
+  border-bottom: 1px solid #2b2d42;
+  padding: 5px;
+  width: 200px;
+  margin-bottom: 10px;
 }
 
 #popup-date-due {
-  padding: 4px;
-  border-radius: 5px;
+  padding: 5px;
+  border-bottom: 1px solid #2b2d42;
+  width: 200px;
 }
 
-.due-date-header {
+.due-date-header,
+.prio-header {
+  display: flex;
   margin: 0;
   padding: 0;
-  top: 0;
-  left: 0;
+  margin-left: 2px;
 }
 
 .popup-priority-container {
@@ -510,8 +520,9 @@ h3 {
   align-self: center;
   gap: 10px;
 }
-.popup-add-task-btn,
-.popup-cancel-btn {
+.popup-add-list-btn,
+.popup-cancel-btn,
+.popup-add-task-btn {
   background-color: #2b2d42;
   color: #f6f7eb;
   padding: 5px;
