@@ -456,8 +456,15 @@ h3 {
   font-weight: 500;
 }
 
+.list-form {
+  display: grid;
+  grid-template-rows: 2fr 30px;
+}
+
 .popup-list-input {
   width: 100%;
+  display: flex;
+  justify-content: left;
 }
 
 #popup-priority-select,
@@ -519,12 +526,18 @@ h3 {
   flex-direction: row;
   align-self: center;
   gap: 10px;
+  max-width: 100%;
 }
 .popup-add-list-btn,
 .popup-cancel-btn,
 .popup-add-task-btn {
   background-color: #2b2d42;
   color: #f6f7eb;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
   padding: 5px;
-  width: 100px;
+  border-radius: 25px;
+  width: 200px;
+  max-height: 50px;
 }

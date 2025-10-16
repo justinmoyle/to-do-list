@@ -23,6 +23,7 @@ const LOCAL_STORAGE_LIST_KEY = 'task.lists'
 const LOCAL_STORAGE_SELECTED_ID_KEY = 'task.selectedListId'
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_ID_KEY);
+let taskToEditId = null;
 
 listContainer.addEventListener('click', e => {
     const clickedDeleteButton = e.target.closest('[data-delete-list]');
@@ -63,6 +64,7 @@ taskContainer.addEventListener('click', handleTaskActions);
 
 function handleTaskActions(e) {
     const deleteButton = e.target.closest('.delete-task');
+    const editButton = e.target.closest('.edit-task');
 
     if (deleteButton) {
         const taskItem = deleteButton.closest('.task-item');
@@ -75,6 +77,16 @@ function handleTaskActions(e) {
             saveAndRender();
         }
     }
+
+    if (editButton){
+        const taskItem = editButton.closest('.task-item');
+        if (!taskItem) return;
+        const taskId = taskItem.dataset.taskId;
+
+        if (taskId) {
+            openEditTaskPopUp(taskId);
+        }
+    }
 }
 
 function deleteTask(taskId) {
@@ -83,6 +95,27 @@ function deleteTask(taskId) {
     if (selectedList) {
         selectedList.tasks = (selectedList.tasks ?? []).filter(task => task.id !== taskId);
     }
+}
+
+function openEditTaskPopUp(taskId) {
+    const selectedList = lists.find(list => list.id === selectedListId);
+    const task = selectedList.tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    taskToEditId = taskId;
+    loadPopUpForm(taskFormTemplate);
+    const newForm = popupContentArea.querySelector('form');
+
+    newForm.querySelector('#popup-task-input').value = task.name;
+    newForm.querySelector('#popup-task-description').value = task.description;
+    newForm.querySelector('#popup-date-due').value = task.date;
+    newForm.querySelector('#popup-priority-select').value = task.priority;
+
+    const submitBtn = newForm.querySelector('.popup-add-task-btn');
+    if (submitBtn) {
+        submitBtn.textContent = 'Save Changes';
+    }
+
 }
 
 function save() {
@@ -244,6 +277,8 @@ function openNewListPopUp(){
 function closePopUp() {
     popupContainer.classList.add(HIDDEN_CLASS);
 
+    taskToEditId = null;
+
     clearElement(popupContentArea);
 };
 
@@ -282,9 +317,22 @@ function handleTaskSubmission(e) {
         return;
     };
 
-    const task = createTask(taskName, taskDescription, taskDate, taskPriority);
-    
-    selectedList.tasks.push(task);
+    if (taskToEditId) {
+        const task = (selectedList.tasks || []).find(t => t.id === taskToEditId);
+
+        if (task) {
+            task.name = taskName;
+            task.description = taskDescription;
+            task.date = taskDate;
+            task.priority = taskPriority;
+        }
+
+        taskToEditId = null;
+    } else {
+        const task = createTask(taskName, taskDescription, taskDate, taskPriority);
+        selectedList.tasks.push(task);
+
+    }
 
     closePopUp();
     saveAndRender();
